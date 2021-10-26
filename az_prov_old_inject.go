@@ -627,6 +627,7 @@ func BuildAz(f string, prov string, fields *AzProv) error {
 
 // ReadFile Function readFile reads the JSON file provided from struct files for provider creation
 // Takes one argument which is a string in order to read the file and then Unmarshal the JSON
+// This is backwards compatible with older versions of GO
 func ReadFile(path string) (*AzProv, error) {
 	file, err := ioutil.ReadFile(path)
 	if err != nil {
