@@ -73,7 +73,7 @@ var (
 // BuildAz takes JSON data in from the ReadFile function and formats it into the needed provider block
 // If fields are not intended to be set for provider block simply omit them, they will evaluate to false
 func BuildAz(f string, prov string, fields *AzProv) error {
-
+	var bity []byte
 	feats := map[string]bool{
 		"APIMngmtPurge":               fields.Azure.Features.APIMngmt.PurgeOnDestroy,
 		"CogAccountPurge":             fields.Azure.Features.CogAccount.PurgeOnDestroy,
@@ -109,6 +109,11 @@ func BuildAz(f string, prov string, fields *AzProv) error {
 	auxTenId := fields.Azure.AuxTenantID
 
 	writer := hclwrite.NewFile()
+
+	file, err := ioutil.ReadFile(f)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	rootBod := writer.Body()
 
@@ -611,10 +616,13 @@ func BuildAz(f string, prov string, fields *AzProv) error {
 		fmt.Println("Skipping provisioning of auxiliary_tenant_ids field")
 	}
 
+	bity = append(writer.Bytes(), file...)
+
+
 	providerBody.AppendBlock(block)
 
 
-	write := ioutil.WriteFile(f, writer.Bytes(), 0644)
+	write := ioutil.WriteFile(f, bity, 0644)
 	return write
 }
 
