@@ -110,11 +110,6 @@ func BuildAz(f string, prov string, fields *AzProv) error {
 
 	writer := hclwrite.NewFile()
 
-	hclFile, err := ioutil.ReadFile(f)
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	rootBod := writer.Body()
 
 	provider := rootBod.AppendNewBlock("provider", []string{prov})
@@ -616,12 +611,8 @@ func BuildAz(f string, prov string, fields *AzProv) error {
 		fmt.Println("Skipping provisioning of auxiliary_tenant_ids field")
 	}
 
-	providerBody.AppendBlock(block)
 
-	write := ioutil.WriteFile(f, hclFile, 0644)
-	if err != nil {
-		log.Fatal(err)
-	}
+	write := ioutil.WriteFile(f, writer.Bytes(), 0644)
 	return write
 }
 
