@@ -3,7 +3,7 @@ This package is intended to be used along with Terraform to inject provider valu
 - Must pass in a JSON object, preferably a JSON file with correct formatting
 */
 
-package terrainject
+package terraoldinject
 
 import (
 	"encoding/json"
