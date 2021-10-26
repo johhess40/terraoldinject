@@ -621,7 +621,7 @@ func BuildAz(f string, prov string, fields *AzProv) error {
 
 	providerBody.AppendBlock(block)
 
-
+	// Appended bytes which will now be written to the file
 	write := ioutil.WriteFile(f, bity, 0644)
 	return write
 }
