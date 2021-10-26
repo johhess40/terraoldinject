@@ -616,10 +616,12 @@ func BuildAz(f string, prov string, fields *AzProv) error {
 		fmt.Println("Skipping provisioning of auxiliary_tenant_ids field")
 	}
 
+	providerBody.AppendBlock(block)
+	
 	bity = append(writer.Bytes(), file...)
 
 
-	providerBody.AppendBlock(block)
+
 
 	// Appended bytes which will now be written to the file
 	write := ioutil.WriteFile(f, bity, 0644)
